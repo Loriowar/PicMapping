@@ -1,0 +1,13 @@
+%div.hero-unit
+  %div.align-center
+    %h1
+      Map the Picture
+    = image_tag "pics/#{@pic.file_name}", class: 'pic-map'
+    = hidden_field_tag 'pic-id', @pic.id
+  %br
+  %div.align-center
+    %button{id: 'confirm_mapping_btn',
+            class: 'btn btn-info',
+            type: 'button'}
+      Confirm mapping and get next pic
+  %br

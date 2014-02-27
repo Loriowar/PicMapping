@@ -14,3 +14,19 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+//= require bootstrap
+
+$(document).ready(function() {
+  window.click_coordinates_storage = [];
+  $('.pic-map').on('click', function(e) {
+    var offset = $(this).offset();
+    var coordinates = [e.clientX - offset.left, e.clientY - offset.top];
+    click_coordinates_storage.push(coordinates);
+  });
+
+  $('#confirm_mapping_btn').on('click', function(e) {
+    var pic_id = $('#pic-id').val();
+    var post_url = '/pic/' + pic_id + '/submit_coordinates'
+    jQuery.post(post_url, {mapped_coordinates: window.click_coordinates_storage});
+  });
+});
