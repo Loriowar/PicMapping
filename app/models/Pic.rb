@@ -42,6 +42,19 @@ class Pic < Base
       end
     end
 
+    def export_to_file(path = nil)
+      path ||= 'export.txt'
+
+      out_file = File.open(path, 'w+')
+      # save coordinates of processed pics in file
+      Pic.where(is_processed: true).each do |rec|
+        coordinates = rec.coordinates
+        string_with_x_y = coordinates.collect{|coord| [coord.x_point, coord.y_point]}.flatten.join(' ')
+        out_file.puts("#{rec.file_path} #{string_with_x_y}\n")
+      end
+      out_file.close
+    end
+
     #get any random unprocessed picture
     def next_unmapped_record
       Pic.where(is_processed: false).order("RANDOM()").limit(1).first
