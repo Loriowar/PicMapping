@@ -20,18 +20,22 @@ class PicController < ApplicationController
   def submit_coordinates
     @pic = Pic.find_by(id: params[:pic_id])
 
-    # store coordinates in db
-    Coordinate.create_from_array(params[:mapped_coordinates], params[:pic_id])
+    # evaide case, when many peples try to map one pic
+    if @pic.coordinates.blank?
+      # store coordinates in db
+      Coordinate.create_from_array(params[:mapped_coordinates], params[:pic_id])
 
-    # marck pic is processed
-    @pic.is_processed = true
-    @pic.save
+      # mark pic as processed
+      @pic.is_processed = true
+      @pic.save
+    end
 
     # redirect to next unmapped picture
     render js: "window.location = '/pic'"
   end
 
   # filters
+
   def validate_processed
     return if params[:id].blank?
 

@@ -22,6 +22,11 @@ $(document).ready(function() {
     var offset = $(this).offset();
     var coordinates = [e.clientX - offset.left, e.clientY - offset.top];
     click_coordinates_storage.push(coordinates);
+
+    // very dirty hack
+    var div_element = "\n<div class='asterisk-pointer' style='left: " + (e.clientX-4) +  "px; top: " + (e.clientY-12) + "px;'>*</div>";
+    var markers_container = $('.marker-container');
+    markers_container.html(markers_container.html() + div_element);
   });
 
   $('#confirm_mapping_btn').on('click', function(e) {
